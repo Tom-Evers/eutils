@@ -87,7 +87,7 @@ def pick_from_list(l: List[A], to_string: Callable[[A], str] = None,
 
 def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
     """
-    Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists
+    Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists.
 
     :param data: data to dump
     :param path_to_file: path to the dump file - defaults to "quick_dump.json" in current directory
@@ -98,3 +98,15 @@ def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
     with open(path_to_file, 'w') as dump_file:
         import json
         json.dump(data, dump_file)
+
+
+def load(path_to_file: str = "quick_dump.json") -> Any:
+    """
+    Loads data from json file.
+
+    :param path_to_file: path to the dump file - defaults to "quick_dump.json" in current directory
+    :return: data contained by 'path_to_file'
+    """
+    with open(path_to_file, 'r') as dump_file:
+        import json
+        return json.load(dump_file)
