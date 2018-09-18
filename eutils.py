@@ -83,3 +83,18 @@ def pick_from_list(l: List[A], to_string: Callable[[A], str] = None,
 
     choice = int(answer) - 1
     return l[choice] if return_element else choice
+
+
+def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
+    """
+    Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists
+
+    :param data: data to dump
+    :param path_to_file: path to the dump file - defaults to "quick_dump.json" in current directory
+    """
+    import os
+    if os.path.exists(path_to_file) and not yes_no("Overwrite existing file '{}'?".format(path_to_file), default=True):
+        return
+    with open(path_to_file, 'w') as dump_file:
+        import json
+        json.dump(data, dump_file)
