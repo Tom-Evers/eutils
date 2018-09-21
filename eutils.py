@@ -56,6 +56,7 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     Lets the user pick an element from a list.
 
     :param l: list to pick from
+    :param prompt: optional extra information about what to pick
     :param to_string: function that converts an element el from l to a string - defaults to el.__str__()
     :param default_index: optional default choice
     :param return_element: will return list element when True (default) or the chosen index when False
@@ -86,12 +87,36 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     return l[choice] if return_element else choice
 
 
-def confirm_input(prompt: str, default: str = None):
+def confirm_input(prompt: str, default: str = None) -> str:
+    """
+    Asks for user input and confirmation of the entered input
+
+    :param prompt: the question to answer
+    :param default: optional default answer
+    :return: confirmed correct user input
+    """
     res = input(prompt + (" (default is '{}') > ".format(default) if default else " > "))
     if default and res == "": return default
     while not yes_no("Input will be '{}'. Continue?".format(res), default=True):
         res = input(prompt)
     return res
+
+
+def typed_input(prompt: str, t: type) -> Any:
+    """
+    Asks user input of specific type (int, float, etc)
+
+    :param prompt: the question to answer
+    :param t: the specified type
+    :return: user input of type t
+    """
+    answer = input(prompt + " > ")
+    while True:
+        if t == type(float): answer = answer.replace(',', '.')
+        try:
+            return t(answer)
+        except ValueError:
+            answer = input("Please enter something of type '{}'".format(str(t.__name__)))
 
 
 def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
