@@ -102,15 +102,18 @@ def confirm_input(prompt: str, default: str = None) -> str:
     return res
 
 
-def typed_input(prompt: str, t: type) -> Any:
+def typed_input(prompt: str, t: type, default: A = None) -> A:
     """
     Asks user input of specific type (int, float, etc)
 
     :param prompt: the question to answer
     :param t: the specified type
+    :param default: optional default value
     :return: user input of type t
     """
-    answer = input(prompt + " > ")
+    if default: assert t == type(default)
+    answer = input(prompt + (" (default is '{}') > ".format(default) if default else " > "))
+    if default and answer == "": return default
     while True:
         if t == type(float): answer = answer.replace(',', '.')
         try:
