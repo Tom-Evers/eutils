@@ -48,7 +48,8 @@ def yes_no(question: str, default: bool = None) -> bool:
     return answer in yes
 
 
-def pick_from_list(l: List[A], to_string: Callable[[A], str] = None,
+def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
+                   to_string: Callable[[A], str] = None,
                    default_index: int = None, return_element=True,
                    auto_return_single_element: bool = True) -> Union[A, int]:
     """
@@ -67,7 +68,7 @@ def pick_from_list(l: List[A], to_string: Callable[[A], str] = None,
     if auto_return_single_element and len(l) == 1:
         return l[0] if return_element else 0
 
-    print("Pick from the following list:")
+    print(prompt)
     if to_string is None:
         def to_string(x):
             return x.__str__()
