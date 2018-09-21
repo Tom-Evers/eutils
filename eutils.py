@@ -86,6 +86,14 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     return l[choice] if return_element else choice
 
 
+def confirm_input(prompt: str, default: str = None):
+    res = input(prompt + (" (default is '{}') > ".format(default) if default else " > "))
+    if default and res == "": return default
+    while not yes_no("Input will be '{}'. Continue?".format(res), default=True):
+        res = input(prompt)
+    return res
+
+
 def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
     """
     Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists.
