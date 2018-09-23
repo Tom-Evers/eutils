@@ -50,7 +50,7 @@ def yes_no(question: str, default: bool = None) -> bool:
 
 def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
                    to_string: Callable[[A], str] = None,
-                   default_index: int = None, return_element=True,
+                   default_index: int = -1, return_element=True,
                    auto_return_single_element: bool = True) -> Union[A, int]:
     """
     Lets the user pick an element from a list.
@@ -63,7 +63,7 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     :param auto_return_single_element: if len(l) == 1, return l[0] without promt - defaults to True
     :return: either the chosen list element, or its index when return_element == False
     """
-    if default_index is not None and default_index not in range(0, len(l)):
+    if default_index != -1 and default_index not in range(0, len(l)):
         raise IndexError("Default index outside list range.")
 
     if auto_return_single_element and len(l) == 1:
@@ -76,9 +76,10 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     for i, el in enumerate(l):
         print("\t[{}]: {}".format(i + 1, to_string(el)))
 
-    answer = input("Enter choice (1 to {}) > ".format(len(l)))
+    default_str = "" if default_index != -1 else ", default is {}".format(default_index + 1)
+    answer = input("Enter choice (1 to {}{}) > ".format(len(l), default_str))
     while not (answer.isnumeric() and int(answer) in range(1, len(l) + 1)):
-        if len(answer) == 0 and default_index is not None:
+        if len(answer) == 0 and default_index != -1:
             answer = default_index + 1
             break
         answer = input("Please enter a number between 1 and {} > ".format(len(l)))
