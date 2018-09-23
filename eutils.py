@@ -76,7 +76,7 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     for i, el in enumerate(l):
         print("\t[{}]: {}".format(i + 1, to_string(el)))
 
-    default_str = "" if default_index != -1 else ", default is {}".format(default_index + 1)
+    default_str = "" if default_index == -1 else ", default is {}".format(default_index + 1)
     answer = input("Enter choice (1 to {}{}) > ".format(len(l), default_str))
     while not (answer.isnumeric() and int(answer) in range(1, len(l) + 1)):
         if len(answer) == 0 and default_index != -1:
