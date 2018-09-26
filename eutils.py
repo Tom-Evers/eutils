@@ -148,3 +148,13 @@ def load(path_to_file: str = "quick_dump.json") -> Any:
     with open(path_to_file, 'r') as dump_file:
         import json
         return json.load(dump_file)
+
+
+def interleave(*l: List[Any]) -> List[Any]:
+    """
+    Interleaves an arbitrary amount of lists
+
+    :param l: an arbitrary amount of lists
+    :return: an interleaved list
+    """
+    return [x for t in zip(*l) for x in t]
