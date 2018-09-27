@@ -1,4 +1,4 @@
-from typing import NewType, Any, Callable, List, Union
+from typing import NewType, Any, Callable, List, Union, Dict
 
 A = NewType('A', Any)
 B = NewType('B', Any)
@@ -158,3 +158,30 @@ def interleave(*l: List[Any]) -> List[Any]:
     :return: an interleaved list
     """
     return [x for t in zip(*l) for x in t]
+
+
+def dict_append(d: Dict[A, List[B]], k: A, v: B):
+    """
+    Appends value v to the list of d[k]
+
+    :param d: the dict
+    :param k: the key
+    :param v: the value to append
+    """
+    try:
+        d[k].append(v)
+    except KeyError:
+        d[k] = [v]
+
+
+def dict_remove(d: Dict[A, List[B]], k: A, v: B):
+    """
+    Removes value v from the list of d[k]
+
+    :param d: the dict
+    :param k: the key
+    :param v: the value to remove
+    """
+    d[k].remove(v)
+    if len(d[k]) == 0:
+        del d[k]
