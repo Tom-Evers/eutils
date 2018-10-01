@@ -120,7 +120,7 @@ def typed_input(prompt: str, t: type, default: A = None) -> A:
         try:
             return t(answer)
         except ValueError:
-            answer = input("Please enter something of type '{}'".format(str(t.__name__)))
+            answer = input("Please enter something of type '{}' > ".format(str(t.__name__)))
 
 
 def dump(data: Any, path_to_file: str = "quick_dump.json") -> None:
