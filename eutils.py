@@ -185,3 +185,13 @@ def dict_remove(d: Dict[A, List[B]], k: A, v: B):
     d[k].remove(v)
     if len(d[k]) == 0:
         del d[k]
+
+
+def flatten(l: List[List[Any]]) -> List[Any]:
+    """
+    Flattens a list of lists
+
+    :param l: a list of lists
+    :return: a list containing the elements from l's sublists
+    """
+    return [l2 for l1 in l for l2 in l1]
