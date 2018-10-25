@@ -13,7 +13,9 @@ def foldl(f: Callable[[A, B], A], a: A, lb: List[B]) -> A:
     :param lb: list with elements of type b
     :return: result of left fold of f over list lb starting with a
     """
-    return a if len(lb) == 0 else foldl(f, f(a, lb[0]), lb[1:])
+    # return a if len(lb) == 0 else foldl(f, f(a, lb[0]), lb[1:])
+    for b in lb: a = f(a, b)
+    return a
 
 
 def foldr(f: Callable[[A, B], B], b: B, la: List[A]) -> B:
@@ -25,7 +27,7 @@ def foldr(f: Callable[[A, B], B], b: B, la: List[A]) -> B:
     :param la: list with elements of type a
     :return: result of right fold of f over list la starting with b
     """
-    return b if len(la) == 0 else foldr(f, f(la[-1], b), la[:-1])
+    return b if len(la) == 0 else f(la[0], foldr(f, b, la[1:]))
 
 
 def yes_no(question: str, default: bool = None) -> bool:
