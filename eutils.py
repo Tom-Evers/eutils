@@ -101,7 +101,7 @@ def confirm_input(prompt: str, default: str = None) -> str:
     res = input(prompt + (" (default is '{}') > ".format(default) if default else " > "))
     if default and res == "": return default
     while not yes_no("Input will be '{}'. Continue?".format(res), default=True):
-        res = input(prompt)
+        res = input(prompt + ' > ')
     return res
 
 
