@@ -143,7 +143,8 @@ def dump(data: Any, path_to_file: str = "quick_dump.json", overwrite=None, encod
 
     if os.path.exists(path_to_file):
         if overwrite is None:
-            overwrite = pick_from_list(["Append with '_old'", "Overwrite", "Do nothing"], "File exists. What to do?")
+            overwrite = pick_from_list(["Append with '_old'", "Overwrite", "Do nothing"],
+                                       "'{}' exists. What to do?".format(path_to_file))
         if overwrite == 0:
             rec_rename(path_to_file)
         elif overwrite == 1:
