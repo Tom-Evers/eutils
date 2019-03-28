@@ -125,13 +125,13 @@ def typed_input(prompt: str, t: type, default: A = None) -> A:
             answer = input("Please enter something of type '{}' > ".format(str(t.__name__)))
 
 
-def dump(data: Any, path_to_file: str = "quick_dump.json", overwrite=False, encoder=None) -> None:
+def dump(data: Any, path_to_file: str = "quick_dump.json", overwrite=None, encoder=None) -> None:
     """
     Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists.
 
     :param data: data to dump
     :param path_to_file: path to the dump file - defaults to "quick_dump.json" in current directory
-    :param overwrite: overwrite any existing file
+    :param overwrite: overwrite any existing file - 0=Append with _old, 1=Overwrite, 2=Do nothing
     :param encoder: sets the `cls` parameter of json.dump()
     """
     import os
@@ -141,14 +141,14 @@ def dump(data: Any, path_to_file: str = "quick_dump.json", overwrite=False, enco
         if os.path.exists(new_path): rec_rename(new_path)
         os.rename(path, new_path)
 
-    if not overwrite and os.path.exists(path_to_file):
-        choice = pick_from_list(["Append with '_old'", "Overwrite", "Do nothing"],
-                                "File exists. What to do?")
-        if choice == 0:
+    if os.path.exists(path_to_file):
+        if overwrite is None:
+            overwrite = pick_from_list(["Append with '_old'", "Overwrite", "Do nothing"], "File exists. What to do?")
+        if overwrite == 0:
             rec_rename(path_to_file)
-        elif choice == 1:
+        elif overwrite == 1:
             pass
-        elif choice == 2:
+        elif overwrite == 2:
             return
     with open(path_to_file, 'w') as dump_file:
         import json
