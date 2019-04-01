@@ -79,13 +79,8 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
         print("\t[{}]: {}".format(i + 1, to_string(el)))
 
     default_str = "" if default_index == -1 else ", default is {}".format(default_index + 1)
-    answer = input("Enter choice (1 to {}{}) > ".format(len(l), default_str))
-    while not (answer.isnumeric() and int(answer) in range(1, len(l) + 1)):
-        if len(answer) == 0 and default_index != -1:
-            answer = default_index + 1
-            break
-        answer = input("Please enter a number between 1 and {} > ".format(len(l)))
-
+    answer = typed_input("Enter choice (1 to {}{})".format(len(l), default_str),
+                         int, default_index if default_index >= 0 else None, lambda a: 1 <= a <= len(l))
     choice = int(answer) - 1
     return l[choice] if return_element else choice
 
