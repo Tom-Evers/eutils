@@ -105,22 +105,30 @@ def confirm_input(prompt: str, default: str = None) -> str:
     return res
 
 
-def typed_input(prompt: str, t: type, default: A = None) -> A:
+def typed_input(prompt: str, t: type, default: A = None, req: Callable[[A], bool] = lambda _: True) -> A:
     """
     Asks user input of specific type (int, float, etc)
 
     :param prompt: the question to answer
     :param t: the specified type
     :param default: optional default value
+    :param req: optional requirement for the user input
     :return: user input of type t
     """
-    if default: assert t == type(default)
+    if default:
+        assert t == type(default)
+        assert req(default)
     answer = input(prompt + (" (default is '{}') > ".format(default) if default else " > "))
     if default and answer == "": return default
     while True:
-        if t == type(float): answer = answer.replace(',', '.')
+        if t == type(float):
+            answer = answer.replace(',', '.')
         try:
-            return t(answer)
+            answer = t(answer)
+            if req(answer):
+                return answer
+            else:
+                answer = input("Enter a value that satisfies the requirement > ")
         except ValueError:
             answer = input("Please enter something of type '{}' > ".format(str(t.__name__)))
 
