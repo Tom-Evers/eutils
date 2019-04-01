@@ -78,9 +78,8 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     for i, el in enumerate(l):
         print("\t[{}]: {}".format(i + 1, to_string(el)))
 
-    default_str = "" if default_index == -1 else ", default is {}".format(default_index + 1)
-    answer = typed_input("Enter choice (1 to {}{})".format(len(l), default_str),
-                         int, default_index if default_index >= 0 else None, lambda a: 1 <= a <= len(l))
+    answer = typed_input("Enter choice from 1 to {}".format(len(l)),
+                         int, default_index + 1 if default_index >= 0 else None, lambda a: 1 <= a <= len(l))
     choice = int(answer) - 1
     return l[choice] if return_element else choice
 
