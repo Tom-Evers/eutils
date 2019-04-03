@@ -155,8 +155,11 @@ def dump(data: Any, path_to_file: str = "quick_dump.json", overwrite=None, encod
         elif overwrite == 2:
             return
     with open(path_to_file, 'w') as dump_file:
-        import json
-        json.dump(data, dump_file, cls=encoder)
+        if type(data) == str:
+            dump_file.write(data)
+        else:
+            import json
+            json.dump(data, dump_file, cls=encoder)
 
 
 def load(path_to_file: str = "quick_dump.json") -> Any:
