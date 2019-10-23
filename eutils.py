@@ -65,11 +65,11 @@ def pick_from_list(l: List[A], prompt: str = "Pick from the following list:",
     :param auto_return_single_element: if len(l) == 1, return l[0] without promt - defaults to True
     :return: either the chosen list element, or its index when return_element == False
     """
-    if default_index != -1 and default_index not in range(0, len(l)):
-        raise IndexError("Default index outside list range.")
-
     if auto_return_single_element and len(l) == 1:
         return l[0] if return_element else 0
+
+    if default_index != -1 and default_index not in range(0, len(l)):
+        raise IndexError("Default index outside list range.")
 
     print(prompt)
     if to_string is None:
