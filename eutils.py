@@ -125,19 +125,20 @@ def typed_input(prompt: str, t: type, default: A = None) -> A:
             answer = input("Please enter something of type '{}' > ".format(str(t.__name__)))
 
 
-def dump(data: Any, path_to_file: str = "quick_dump.json") -> bool:
+def dump(data: Any, path_to_file: str = "quick_dump.json", indent: int = None) -> bool:
     """
     Dumps data into a json file, asks for overwrite confirmation if file 'path_to_file' already exists.
 
     :param data: data to dump
     :param path_to_file: path to the dump file - defaults to "quick_dump.json" in current directory
+    :param indent: desired indentation - defaults to None (everything on a single line)
     """
     import os
     if os.path.exists(path_to_file) and not yes_no("Overwrite existing file '{}'?".format(path_to_file), default=True):
         return False
     with open(path_to_file, 'w') as dump_file:
         import json
-        json.dump(data, dump_file)
+        json.dump(data, dump_file, indent=indent)
         return True
 
 
