@@ -199,3 +199,20 @@ def flatten(l: List[List[Any]]) -> List[Any]:
     :return: a list containing the elements from l's sublists
     """
     return [l2 for l1 in l for l2 in l1]
+
+
+def start(f: str) -> None:
+    """
+    Calls the OS-specific 'start' command on a file
+    :param f: path to file to be opened with its default application
+    """
+    from platform import system
+    if system() == 'Darwin':  # MacOS
+        from subprocess import call
+        call(('open', f))
+    elif system() == 'Windows':  # Windows
+        from os import startfile
+        startfile(f)
+    else:  # Linux variants
+        from subprocess import call
+        call(('xdg-open', f))
